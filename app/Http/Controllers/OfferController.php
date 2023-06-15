@@ -21,6 +21,7 @@ class OfferController extends Controller
     public function create(OfferRequest $req)
     {
         $req->validated();
+    
 
 
     }
