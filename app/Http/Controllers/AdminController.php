@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+       $users=User::all();
+       $payment=Payment::all();
+       return view('admin',compact('users','payment'));
     }
 
     /**
@@ -49,9 +52,9 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show( $id)
     {
-        //
+
     }
 
     /**
@@ -59,7 +62,8 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $users=User::findOrFail($id);
+        return view('usersedit',compact('users'));
     }
 
     /**
@@ -67,7 +71,23 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+
+            'name'=>'required',
+            'lastname'=>'required',
+            'phone'=>'required|integer',
+            "email"=>'required|unique',
+            "password"=>'required',
+            'confirmpassword'=>'required'
+
+
+
+        ]
+
+        );
+
+        User::where('id',$id)->update([$request->all()]);
+        return  redirect()->route('admin')->with('message','your users update sucssufly');
     }
 
     /**
@@ -75,6 +95,7 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-    }
+        User::findOrFail($id)->delete();
+        return redirect()->route('admin')->with('message','user deleted susccfuly');
+}
 }
