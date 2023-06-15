@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OfferRequest;
+use App\Models\Offer;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
@@ -18,19 +19,20 @@ class OfferController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(OfferRequest $req)
+    public function create()
     {
-        $req->validated();
-
 
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(OfferRequest $req)
     {
         //
+        $req->validated();
+        Offer::create([$req->all()]);
+        return back()->with("msg", "Offer Successfully created");
     }
 
     /**
