@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OfferRequest;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
@@ -17,9 +18,11 @@ class OfferController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(OfferRequest $req)
     {
-        //
+        $req->validated();
+
+
     }
 
     /**

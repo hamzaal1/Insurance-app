@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
+    public function contract(){
+        return $this::hasMany(Contract::class);
+    }
 }
